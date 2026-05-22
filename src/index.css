@@ -1127,7 +1127,95 @@ h2 em {
   line-height: 1.5;
 }
 
-/* ============== Call to Order Modal ============== */
+/* ============== Order Now Modal ============== */
+
+.order-now-modal {
+  text-align: center;
+}
+.order-now-modal h3 em {
+  display: block;
+  margin-top: 4px;
+}
+
+.delivery-platforms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.platform-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 14px 20px;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 5px 5px 0 var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.platform-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.platform-postmates {
+  background: var(--ink);
+  color: var(--cream);
+}
+.platform-ubereats {
+  background: #06C167;
+  color: #fff;
+}
+
+.platform-logo {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+.platform-logo svg {
+  width: 100%;
+  height: 100%;
+}
+.platform-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.platform-cta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.or-divider {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.phone-card-sm {
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.phone-card-sm .phone-number {
+  font-size: 26px;
+}
+
+@media (max-width: 480px) {
+  .delivery-platforms {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============== Call to Order Modal (legacy) ============== */
 
 .call-modal {
   text-align: center;

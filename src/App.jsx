@@ -107,7 +107,7 @@ function Nav({ active, onNavigate, onReserve }) {
             </a>
           ))}
           <button className="nav-cta" onClick={() => { onReserve(); setMobileOpen(false); }}>
-            Call to Order
+            Order Now
           </button>
         </div>
       </div>
@@ -140,8 +140,8 @@ function Hero({ onScrollToMenu, onReserve }) {
           </p>
           <div className="hero-actions">
             <button className="btn-primary" onClick={onReserve}>
-              Call to Order
-              <span className="btn-sub">Ordenar por teléfono</span>
+              Order Now
+              <span className="btn-sub">Pedir ahora · Delivery &amp; Pickup</span>
             </button>
             <button className="btn-secondary" onClick={onScrollToMenu}>
               View Menu →
@@ -236,10 +236,10 @@ function Menu({ menuRef }) {
       <div className="menu-header">
         <CornerOrnament />
         <div className="menu-eyebrow">— Our Menu · Nuestro Menú —</div>
-        <h2>Hand-made,<br/><em>like at home.</em></h2>
+        <h2>Traditional,<br/><em>straight from Mexico.</em></h2>
         <p className="menu-sub">
-          <span className="en">Family recipes from the coast, masa ground each morning, salsas made in the molcajete.</span>
-          <span className="es">Recetas familiares de la costa, masa molida cada mañana, salsas hechas en molcajete.</span>
+          <span className="en">Family recipes, authentic flavors and fresh ingredients.</span>
+          <span className="es">Recetas familiares, sabores auténticos e ingredientes frescos.</span>
         </p>
         <CornerOrnament flip />
       </div>
@@ -307,18 +307,18 @@ function About() {
 
         <div className="about-copy">
           <div className="about-eyebrow">— Our Story · Nuestra Historia —</div>
-          <h2>From the coast of Guerrero to <em>Pulaski Road</em>.</h2>
+          <h2>From Central Mexico to <em>Pulaski Road</em>.</h2>
 
           <div className="about-text">
             <p className="en">
-              The Hernández family opened Taquería El Costeño with a simple dream: bring the flavors
-              of the Pacific coast to Chicago. We grind our masa in-house, toast guajillo chiles on a
-              clay comal, and pound every salsa in the molcajete — just like in the village market.
+              The Serna family opened Taquería El Costeño with a simple dream: bring the flavors
+              of central Mexico to Chicago. We make our salsas from scratch, toast guajillo chiles on a
+              comal, and bring traditional flavors to all our foods.
             </p>
             <p className="es">
-              La familia Hernández abrió Taquería El Costeño con un sueño sencillo: traer los sabores
-              del puerto a Chicago. La masa se muele en casa, el chile guajillo se tuesta en comal, y
-              cada salsa nace en el molcajete — como en el mercado del pueblo.
+              La familia Serna abrió Taquería El Costeño con un sueño sencillo: traer los sabores
+              del puerto a Chicago. Hacemos nuestras salsas a mano, tostamos chiles guajillos en un comal, 
+              y traemos sabores tradicionales a toda nuestra comida.
             </p>
           </div>
 
@@ -411,39 +411,62 @@ function Footer() {
   );
 }
 
-// ==================== Call to Order Modal ====================
+// ==================== Order Now Modal ====================
+
+const POSTMATES_URL = "https://www.postmates.com/store/el-costeno-2-8121-s-pulaski-rd/opr8gOJgRqWlmewgVOoUPg?diningMode=PICKUP&utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas&rwg_token=AFd1xnHMYcfp3BLx_pQb8r_VkaDgPqURe6oknOAKzIOrGJwFzuQWaw8xNRSd8Z4S9_FxTIT5sjR11FVM2LxHVEw_OML4J71cSQ%3D%3D";
+const UBEREATS_URL = "https://www.ubereats.com/store/el-costeno-2-8121-s-pulaski-rd/opr8gOJgRqWlmewgVOoUPg?diningMode=PICKUP&utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas&rwg_token=AFd1xnHbvo2z_9v9_OJW3BnV4GwbVI4TvKIBhm_kFG7uwr4-1hXqmqDMXvfvEIrSIRvqe4pwO1a7ZDz3k0sJJEMQdojFcBvEYg%3D%3D";
 
 function OrderModal({ open, onClose }) {
   if (!open) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal call-modal" onClick={e => e.stopPropagation()}>
+      <div className="modal order-now-modal" onClick={e => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
         <SerapeStripes height={10} />
         <div className="modal-inner">
-          <div className="modal-eyebrow">— Call to Order · Ordenar por teléfono —</div>
-          <h3>Give us a ring,<br/><em>we'll take care of you.</em></h3>
+          <div className="modal-eyebrow">— Order Now · Pedir ahora —</div>
+          <h3>Ready to eat?<br/><em>Pickup or delivery.</em></h3>
           <p className="call-intro">
-            Pickup orders are taken over the phone. Our team will confirm your order, give you a pickup time,
-            and have everything ready when you arrive.<br/>
-            <em>Los pedidos para llevar se toman por teléfono. Te confirmamos tu pedido y te decimos cuándo recogerlo.</em>
+            Order through your favorite app for pickup or delivery — or call us directly.<br/>
+            <em>Pide a través de tu app favorita para llevar o a domicilio, o llámanos directo.</em>
           </p>
 
-          <a className="phone-card" href="tel:7733351703">
+          <div className="delivery-platforms">
+            <a
+              className="platform-card platform-postmates"
+              href={POSTMATES_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="platform-logo">
+                <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 2.5a11.5 11.5 0 1 1 0 23 11.5 11.5 0 0 1 0-23zm-3.5 6v11h2.5v-4h2c2.21 0 4-1.79 4-4s-1.79-3-4-3h-4.5zm2.5 2h2c.828 0 1.5.448 1.5 1s-.672 1.5-1.5 1.5H15v-2.5z"/></svg>
+              </div>
+              <div className="platform-name">Postmates</div>
+              <div className="platform-cta">Order Now →</div>
+            </a>
+
+            <a
+              className="platform-card platform-ubereats"
+              href={UBEREATS_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="platform-logo">
+                <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm-4 8h2.5v6.5a2 2 0 0 0 4 0V10H21v6.5a4.5 4.5 0 0 1-9 0V10z"/></svg>
+              </div>
+              <div className="platform-name">Uber Eats</div>
+              <div className="platform-cta">Order Now →</div>
+            </a>
+          </div>
+
+          <div className="or-divider"><span>— or call us to order —</span></div>
+
+          <a className="phone-card phone-card-sm" href="tel:7733351703">
             <div className="phone-label">Call us · Llámanos</div>
             <div className="phone-number">(773) 335 · 1703</div>
             <div className="phone-cta">Tap to call →</div>
           </a>
-
-          <div className="call-hours">
-            <div className="ch-row"><span>Mon – Sun</span><span>8 AM – 9 PM</span></div>
-          </div>
-
-          <p className="call-foot">
-            Prefer to dine in? Just walk in — no reservation needed.<br/>
-            <em>¿Prefieres comer aquí? Pasa cuando quieras, sin reservación.</em>
-          </p>
 
           <button className="btn-primary full" onClick={onClose}>Close / Cerrar</button>
         </div>
