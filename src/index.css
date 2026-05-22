@@ -504,6 +504,21 @@ h2 em {
 .menu-sub .en { display: block; color: var(--ink); }
 .menu-sub .es { display: block; color: var(--ink-soft); font-style: italic; margin-top: 6px; font-size: 14px; }
 
+@media (max-width: 680px) {
+  .menu-header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0;
+  }
+  .menu-header > div:nth-child(2),
+  .menu-header > h2,
+  .menu-header > .menu-eyebrow,
+  .menu-header > .menu-sub {
+    grid-column: 1;
+  }
+  .menu-header .corner-ornament { display: none; }
+}
+
 /* Menu tabs (sticky) */
 .menu-tabs-wrap {
   position: sticky;
