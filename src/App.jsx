@@ -205,7 +205,10 @@ function MenuItem({ item }) {
 
 function Menu({ menuRef }) {
   const [active, setActive] = useState("breakfast");
+  const [tabFade, setTabFade] = useState({ left: false, right: true });
   const sectionRefs = useRef({});
+  const tabsRef = useRef(null);
+  const tabRefs = useRef({});
 
   useEffect(() => {
     const handler = () => {
@@ -222,6 +225,35 @@ function Menu({ menuRef }) {
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, [active]);
+
+  // Keep the active tab centered in the tab bar whenever it changes
+  useEffect(() => {
+    const el = tabRefs.current[active];
+    const container = tabsRef.current;
+    if (!el || !container) return;
+    const target = el.offsetLeft - container.offsetWidth / 2 + el.offsetWidth / 2;
+    container.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  }, [active]);
+
+  // Track scroll position to show/hide left & right fade indicators
+  useEffect(() => {
+    const container = tabsRef.current;
+    if (!container) return;
+    const update = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      setTabFade({
+        left: scrollLeft > 4,
+        right: scrollLeft < scrollWidth - clientWidth - 4,
+      });
+    };
+    update();
+    container.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   const scrollToCat = (id) => {
     const el = sectionRefs.current[id];
@@ -245,10 +277,12 @@ function Menu({ menuRef }) {
       </div>
 
       <div className="menu-tabs-wrap">
-        <div className="menu-tabs">
+        {tabFade.left && <div className="tabs-fade tabs-fade-left" aria-hidden="true" />}
+        <div className="menu-tabs" ref={tabsRef}>
           {MENU_DATA.map(cat => (
             <button
               key={cat.id}
+              ref={el => (tabRefs.current[cat.id] = el)}
               className={`menu-tab ${active === cat.id ? "active" : ""}`}
               onClick={() => scrollToCat(cat.id)}
             >
@@ -257,6 +291,7 @@ function Menu({ menuRef }) {
             </button>
           ))}
         </div>
+        {tabFade.right && <div className="tabs-fade tabs-fade-right" aria-hidden="true" />}
       </div>
 
       <div className="menu-body">
